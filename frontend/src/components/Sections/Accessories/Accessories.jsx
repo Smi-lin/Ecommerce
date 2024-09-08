@@ -34,7 +34,6 @@ const Accessories = () => {
             <div className="border-t border-b border-gray-300 py-3">
               <button className="w-full text-left flex justify-between items-center">
                 <span>Accessories</span>
-                <span>&#9660;</span> {/* Downward arrow */}
               </button>
             </div>
 

@@ -1,80 +1,87 @@
 import React, { useState } from "react";
-import { FaTrash } from "react-icons/fa"; // Import trash icon
-import { Link } from "react-router-dom";
+import { FiTrash2 } from "react-icons/fi";
+import image11 from "../../Assets/image11.png";
 
-const CheckoutPage = () => {
-  // State to track quantity and total price
+const CheckoutPage = ({item}) => {
+  // State to track cart items
+  const [quantity, setQuantity] = useState(item ? item.quantity : 1);
   const [cartItems, setCartItems] = useState([
-    { id: 1, name: "Lorem ipsum dolor", price: 165.0, quantity: 2 },
-    { id: 2, name: "Gorem ipsum dolor", price: 165.0, quantity: 2 },
+    {
+      id: 1,
+      name: "Dorem ipsum dolor",
+      description: "Korem ipsum dolor",
+      price: 165.0,
+      quantity: 2,
+    },
+    {
+      id: 2,
+      name: "Corem ipsum dolor",
+      description: "Gorem ipsum dolor",
+      price: 165.0,
+      quantity: 2,
+    },
   ]);
 
-  const handleQuantityChange = (id, amount) => {
-    const updatedItems = cartItems.map((item) =>
-      item.id === id
-        ? { ...item, quantity: Math.max(1, item.quantity + amount) }
-        : item
-    );
-    setCartItems(updatedItems);
-  };
 
-  const handleDelete = (id) => {
-    const updatedItems = cartItems.filter((item) => item.id !== id);
-    setCartItems(updatedItems);
-  };
+
+ 
+  // Increment and decrement quantity
+  const incrementQuantity = () => setQuantity(quantity + 1);
+  const decrementQuantity = () => setQuantity(quantity > 1 ? quantity - 1 : 1);
+
+
 
   return (
     <div className="flex justify-between p-10 space-x-10">
       {/* Cart Items */}
-      <div className="w-1/2 space-y-6">
+      <div className="flex justify-between p-10 space-x-10">
+      {/* Cart Items */}
+      <div className="w-full max-w-2xl p-8 bg-white shadow-lg rounded-lg space-y-8">
         {cartItems.map((item) => (
           <div key={item.id} className="flex justify-between items-center">
-            <div className="flex space-x-4">
+            {/* Product Info */}
+            <div className="flex items-center space-x-4">
               <img
-                src="https://via.placeholder.com/70"
-                alt={item.name}
-                className="w-16 h-16 object-cover"
+                src={image11}
+                alt="Product"
+                className="w-20 h-20 object-cover"
               />
-              <div className="space-y-1">
-                <h3 className="font-semibold">{item.name}</h3>
-                <p className="text-sm text-gray-500">Quantity</p>
-                <div className="flex items-center space-x-2">
-                  <button
-                    onClick={() => handleQuantityChange(item.id, -1)}
-                    className="px-2 py-1 border border-gray-300 rounded"
-                  >
-                    -
-                  </button>
-                  <span>{item.quantity}</span>
-                  <button
-                    onClick={() => handleQuantityChange(item.id, 1)}
-                    className="px-2 py-1 border border-gray-300 rounded"
-                  >
-                    +
-                  </button>
-                </div>
+              <div>
+                <h3 className="text-lg font-semibold">{item.name}</h3>
+                <p className="text-sm text-gray-500">{item.description}</p>
               </div>
             </div>
-            <div className="flex items-center space-x-6">
-              <span className="font-semibold">
-                ${item.price * item.quantity}
-              </span>
-              <button
-                onClick={() => handleDelete(item.id)}
-                className="text-red-500"
-              >
-                <FaTrash />
-              </button>
+
+            {/* Quantity Control */}
+            <div className="flex items-center space-x-4">
+              <div className="flex items-center space-x-2">
+                <button onClick={decrementQuantity} className="border border-gray-300 text-gray-600 px-2 py-1 rounded-md hover:bg-gray-100">
+                  -
+                </button>
+                <span>{quantity}</span>
+                <button onClick={incrementQuantity} className="border border-gray-300 text-gray-600 px-2 py-1 rounded-md hover:bg-gray-100">
+                  +
+                </button>
+              </div>
+              <div className="text-xl font-medium">$160</div>
             </div>
+
+            {/* Delete Button */}
+            <button className="text-red-500">
+              <FiTrash2 className="h-6 w-6" />
+            </button>
           </div>
         ))}
 
-        {/* Total */}
-        <div className="text-right mt-6 border-t border-gray-300 pt-4">
-          <p className="font-bold text-lg">Total</p>
-          <p className="text-lg">$440</p>
+        {/* Total Section */}
+        <div className="flex justify-between items-center text-2xl font-semibold mt-8 pt-4 border-t">
+          <span>Total</span>
+          <span>$360</span>
         </div>
       </div>
+
+      {/* Rest of your component */}
+    </div>
 
       {/* Payment Method */}
       <div className="w-[35vw] h-[50vh] p-8 bg-purple-900 text-white rounded-lg space-y-6">
@@ -98,6 +105,7 @@ const CheckoutPage = () => {
           </label>
         </div>
 
+        {/* Payment Form */}
         <form className="space-y-4">
           <div>
             <label className="block text-sm mb-1">Card number</label>
@@ -159,7 +167,7 @@ const CheckoutPage = () => {
             <label className="block text-sm mb-1">Name on card</label>
             <input
               type="text"
-              placeholder="Jewel Thompson-Aduku"
+              placeholder="John Doe"
               className="w-full p-2 bg-white text-black rounded"
             />
           </div>
@@ -171,11 +179,9 @@ const CheckoutPage = () => {
               Back
             </a>
           </p>
-         <Link to="Success">
-         <button className="w-[10vw] py-2 bg-purple-700 rounded text-white font-bold hover:bg-purple-600 transition">
+          <button className="w-[10vw] py-2 bg-purple-700 rounded text-white font-bold hover:bg-purple-600 transition">
             Pay now
           </button>
-         </Link>
         </div>
       </div>
     </div>

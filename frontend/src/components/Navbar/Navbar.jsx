@@ -35,7 +35,7 @@ const Navbar = () => {
           {isLoggedIn ? (
             // After login (Second image)
             <>
-              <Link to="/profile">
+              <Link>
                 <button
                   type="submit"
                   className="rounded-full text-white bg-[#BB66E6] w-[3rem] h-[3rem] flex items-center justify-center"
